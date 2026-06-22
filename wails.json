@@ -1,0 +1,24 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "scribe",
+  "outputfilename": "Scribe",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Edvin Pierre",
+    "email": "edvin.pierre03@gmail.com"
+  },
+  "info": {
+    "companyName": "Edvin Pierre",
+    "productName": "Scribe",
+    "productVersion": "0.1.0",
+    "comments": "On-device meeting & voice transcription. Audio never leaves your machine."
+  },
+  "build:tags": "fts5",
+  "nsfw": {
+    "bundleId": "com.edvinpierre.scribe",
+    "category": "public.app-category.productivity"
+  }
+}
