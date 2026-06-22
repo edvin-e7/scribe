@@ -3,6 +3,8 @@ module github.com/edvin-e7/scribe
 go 1.25.5
 
 require (
+	github.com/ggerganov/whisper.cpp/bindings/go v0.0.0-20260622100651-6edfe6009f17
+	github.com/go-audio/wav v1.1.0
 	github.com/wailsapp/wails/v2 v2.12.0
 	modernc.org/sqlite v1.53.0
 )
@@ -11,6 +13,8 @@ require (
 	git.sr.ht/~jackmordaunt/go-toast/v2 v2.0.3 // indirect
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/go-audio/audio v1.0.0 // indirect
+	github.com/go-audio/riff v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect

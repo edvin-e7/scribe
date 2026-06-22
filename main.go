@@ -28,9 +28,11 @@ func main() {
 	}
 	defer func() { _ = st.Close() }()
 
-	// Engine injection point: today the deterministic stub, tomorrow whisper.cpp.
-	// Swap this single line once the whisper.cpp Transcriber lands.
-	engine := transcribe.NewStub()
+	// Engine selection. transcribe.Select() returns the real whisper.cpp engine
+	// when the app was built with `-tags whisper` AND a model file is present
+	// (models/ggml-base.en.bin, or $SCRIBE_MODEL_PATH); otherwise it degrades
+	// honestly to the deterministic stub. Force the stub with SCRIBE_ENGINE=stub.
+	engine := transcribe.Select()
 
 	a := app.New(st, engine)
 
