@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scribe — design preview</title>
+    <script>
+      // Design-preview only: mock the Wails bindings with sample data so the
+      // console renders without the Go runtime. NOT shipped (index.html is the
+      // real entry). Lets the visual iteration loop screenshot the real components.
+      const recs = [
+        { id: "1", title: "Weekly Product Sync", audioPath: "", createdAt: "0", durationSec: 2538, engine: "whisper.cpp stub" },
+        { id: "2", title: "1:1 with Maria — capture path", audioPath: "", createdAt: "0", durationSec: 1142, engine: "whisper.cpp stub" },
+        { id: "3", title: "Design review — The Stack", audioPath: "", createdAt: "0", durationSec: 1875, engine: "whisper.cpp stub" },
+      ];
+      const segs = [
+        [930, 948, "So the capture path is the open question. We can record system audio, but the screen-capture entitlement is the part I'm unsure about."],
+        [948, 963, "Right — ScreenCaptureKit needs the build target above macOS 14.4, otherwise the API just isn't there. That's the whole reason the capture branch is gated."],
+        [963, 980, "And we keep it on-device the entire time. Nothing leaves the machine — the transcript is written straight to the local SQLite store."],
+        [980, 1002, "Exactly. The privacy story isn't a marketing line, it's the architecture: no network call exists in the transcribe path at all."],
+        [1002, 1020, "Then the badge in the chrome should say that literally. Never uploaded — make the guarantee visible."],
+        [1020, 1044, "On the model size: large-v3 is the most accurate but it's heavy. We can ship a small default and let people opt into large."],
+        [1044, 1067, "Agreed. Default to the small model, surface the engine name in the UI so it's honest about what produced the transcript."],
+        [1067, 1090, "Last thing — search. FTS5 is already wired, so jumping from a search hit straight to the timestamp should be one click."],
+      ].map((s, i) => ({ id: String(i + 1), recordingId: "1", start: s[0], end: s[1], text: s[2] }));
+      window.go = { app: { App: {
+        EngineName: async () => "whisper.cpp stub",
+        ListRecordings: async () => recs,
+        GetSegments: async () => segs,
+        Search: async (q) => segs.filter((s) => s.text.toLowerCase().includes(q.toLowerCase()))
+          .map((s) => ({ recordingId: "1", recordingTitle: "Weekly Product Sync", segmentId: s.id, start: s.start, end: s.end, text: s.text })),
+        ImportAndTranscribe: async () => recs[0],
+        DeleteRecording: async () => {},
+      } } };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
